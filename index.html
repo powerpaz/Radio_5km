@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Área de influencia 5 km · U.E. Ángel Modesto Paredes</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin="anonymous"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="brand-bar">
+    <div class="brand-left">
+      <img src="logo.png" alt="Ministerio de Educación, Deporte y Cultura" class="brand-logo">
+    </div>
+    <h1 class="brand-title">Área de influencia de hasta 5 km de la Unidad Educativa Ángel Modesto Paredes</h1>
+    <div class="brand-right"><span class="brand-spacer"></span></div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            Capas del Mapa
+          </h2>
+          <div class="status-container">
+            <span class="status" id="status"></span>
+          </div>
+        </div>
+        <div class="panel-content">
+          <div class="layers">
+
+            <div class="layer-row">
+              <label class="layer-check">
+                <input type="checkbox" id="lyrRef" checked>
+                <span class="swatch swatch-ref"></span>
+                U.E. Ángel Modesto Paredes
+              </label>
+              <button class="btn-zoom" data-zoom="ref" title="Centrar en la institución de referencia">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+            </div>
+
+            <div class="layer-row">
+              <label class="layer-check">
+                <input type="checkbox" id="lyrBuffer" checked>
+                <span class="swatch swatch-buffer"></span>
+                Radio de influencia (5 km)
+              </label>
+              <button class="btn-zoom" data-zoom="buffer" title="Ajustar mapa al radio de 5 km">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+            </div>
+
+            <div class="layer-row">
+              <label class="layer-check">
+                <input type="checkbox" id="lyrFiscal" checked>
+                <span class="swatch swatch-fiscal"></span>
+                IE Fiscales
+              </label>
+              <button class="btn-zoom" data-zoom="fiscal" title="Ajustar mapa a IE fiscales">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+            </div>
+
+            <div class="layer-row">
+              <label class="layer-check">
+                <input type="checkbox" id="lyrOtros" checked>
+                <span class="swatch swatch-otros"></span>
+                IE Otros sostenimientos
+              </label>
+              <button class="btn-zoom" data-zoom="otros" title="Ajustar mapa a otros sostenimientos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+            </div>
+
+            <div class="layer-row">
+              <label class="layer-check">
+                <input type="checkbox" id="lyrLineas" checked>
+                <span class="swatch swatch-lineas"></span>
+                Líneas de distancia
+              </label>
+              <button class="btn-zoom" data-zoom="lineas" title="Ajustar mapa a las líneas de distancia">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+            </div>
+
+            <div class="layer-subrow">
+              <label class="layer-check small">
+                <input type="checkbox" id="lyrEtiquetas" checked>
+                Mostrar etiquetas de distancia (DIST_KM) desde zoom 14
+              </label>
+            </div>
+
+            <div class="layer-row">
+              <label class="layer-check">
+                <input type="checkbox" id="lyrVias">
+                <span class="swatch swatch-vias"></span>
+                Vías principales
+              </label>
+              <button class="btn-zoom" data-zoom="vias" title="Ajustar mapa a las vías principales">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+            </div>
+
+            <div class="layer-row">
+              <label class="layer-check">
+                <input type="checkbox" id="lyrRelieve">
+                <span class="swatch swatch-relieve"></span>
+                Modelo de elevación (relieve)
+              </label>
+              <button class="btn-zoom" data-zoom="relieve" title="Ajustar mapa al modelo de elevación">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+            </div>
+
+            <div class="filter-actions">
+              <button id="btnResetView" class="btn-clear">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="1 4 1 10 7 10"></polyline>
+                  <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+                </svg>
+                Restablecer vista
+              </button>
+            </div>
+
+            <div class="data-source"><span class="source-label">Fuente:</span> Base de Datos Integrada AMIE · Análisis geoespacial propio (radio 5 km, EPSG:32717 → WGS84)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+            Resumen Global
+          </h2>
+        </div>
+        <div class="panel-content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">IE en el radio de 5 km</div>
+              <div class="stat-value" id="statTotal">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Distancia promedio</div>
+              <div class="stat-value" id="statAvgDist">0 km</div>
+            </div>
+          </div>
+          <div class="rubros-container">
+            <h3 class="rubros-title">Desglose por Sostenimiento (NOM_SOSTEN)</h3>
+            <table id="rubrosTable" class="rubros-table">
+              <thead>
+                <tr>
+                  <th>Sostenimiento</th>
+                  <th>IE</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+              <tfoot>
+                <tr>
+                  <td>Total General</td>
+                  <td id="totalCell">0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <div class="rubros-container">
+            <h3 class="rubros-title">Desglose por Distrito (DA_DIST)</h3>
+            <table id="distritoTable" class="rubros-table">
+              <thead>
+                <tr>
+                  <th>Distrito</th>
+                  <th>IE</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header note-header">
+          <h2 class="panel-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            Nota Técnica
+          </h2>
+        </div>
+        <div class="panel-content">
+          <p class="note-text">
+            <strong>Transporte público:</strong> no se dispone de información oficial descargable y validada
+            sobre rutas y paradas de transporte público urbano e interparroquial. La fuente municipal
+            (<em>Base de Información Quito — Transporte Urbano e Interparroquial</em>,
+            www7.quito.gob.ec/BaseDeInformacionQuito) no ofrece a la fecha una capa geoespacial
+            descargable en formato abierto. Por este motivo dicha variable no pudo incorporarse al análisis.
+          </p>
+          <p class="note-text">
+            <strong>Distancias:</strong> la capa de líneas representa distancia euclidiana (línea recta)
+            entre la U.E. Ángel Modesto Paredes y cada institución educativa, referencial y no vial.
+            Se contrasta con la capa de vías principales para valorar accesibilidad, y con el modelo de
+            elevación para identificar posibles barreras geográficas (pendientes/relieve).
+          </p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="map-header">
+        <div class="header-content">
+          <h1 class="map-title">ÁREA DE INFLUENCIA 5 KM</h1>
+          <p class="map-subtitle">U.E. ÁNGEL MODESTO PAREDES (AMIE 17H00553) · DISTRITO 17D06</p>
+        </div>
+        <div class="legend">
+          <span class="legend-item"><span class="legend-dot legend-dot-fiscal"></span>Fiscales</span>
+          <span class="legend-item"><span class="legend-dot legend-dot-otros"></span>Otros sostenimientos</span>
+          <span class="legend-item"><span class="legend-dot legend-dot-ref"></span>Institución de referencia</span>
+        </div>
+      </header>
+      <div id="map" class="map-container"></div>
+    </main>
+  </div>
+</body>
+</html>
